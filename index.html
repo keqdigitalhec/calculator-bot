@@ -2,23 +2,125 @@
 <html lang="uk">
 <head>
   <meta charset="UTF-8">
-  <title>Калькулятор дробів</title>
+  <title>Універсальний калькулятор</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/10.6.4/math.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      text-align: center;
+      padding: 20px;
+    }
+
+    h2 {
+      margin-bottom: 10px;
+    }
+
+    #display {
+      width: 100%;
+      max-width: 300px;
+      height: 50px;
+      font-size: 24px;
+      margin: 10px auto;
+      padding: 10px;
+      text-align: right;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      background: #fff;
+    }
+
+    .keyboard {
+      max-width: 300px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 10px;
+    }
+
+    .btn {
+      padding: 20px;
+      font-size: 18px;
+      border: none;
+      border-radius: 5px;
+      background: #4CAF50;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s ease-in-out;
+    }
+
+    .btn:hover {
+      background: #45a049;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+
+    .footer {
+      margin-top: 30px;
+      font-size: 14px;
+      color: #888;
+    }
+  </style>
 </head>
-<body style="font-family: Arial; padding: 30px;">
-  <h2>Калькулятор дробів</h2>
-  <input id="expr" type="text" placeholder="1/2 + 3/4" style="width: 200px;" />
-  <button onclick="calculate()">Розрахувати</button>
+<body>
+  <h2>Універсальний калькулятор</h2>
+  <input id="display" readonly />
+
+  <div class="keyboard">
+    <button class="btn" onclick="append('7')">7</button>
+    <button class="btn" onclick="append('8')">8</button>
+    <button class="btn" onclick="append('9')">9</button>
+    <button class="btn" onclick="append('/')">/</button>
+
+    <button class="btn" onclick="append('4')">4</button>
+    <button class="btn" onclick="append('5')">5</button>
+    <button class="btn" onclick="append('6')">6</button>
+    <button class="btn" onclick="append('*')">*</button>
+
+    <button class="btn" onclick="append('1')">1</button>
+    <button class="btn" onclick="append('2')">2</button>
+    <button class="btn" onclick="append('3')">3</button>
+    <button class="btn" onclick="append('-')">-</button>
+
+    <button class="btn" onclick="append('0')">0</button>
+    <button class="btn" onclick="append('.')">.</button>
+    <button class="btn" onclick="append('(')">(</button>
+    <button class="btn" onclick="append(')')">)</button>
+
+    <button class="btn" onclick="clearDisplay()">C</button>
+    <button class="btn" onclick="append('+')">+</button>
+    <button class="btn" onclick="append('/')">/</button>
+    <button class="btn" onclick="calculate()">=</button>
+  </div>
+
   <p id="result"></p>
 
+  <div class="footer">
+    Підтримує дроби, десяткові числа і вирази<br>
+    Наприклад: <code>1/3 + 0.5</code> або <code>(2 + 1/2) * 4</code>
+  </div>
+
   <script>
+    function append(value) {
+      document.getElementById("display").value += value;
+    }
+
+    function clearDisplay() {
+      document.getElementById("display").value = "";
+      document.getElementById("result").innerText = "";
+    }
+
     function calculate() {
-      const expr = document.getElementById("expr").value;
+      const input = document.getElementById("display").value;
       try {
-        const result = math.fraction(math.evaluate(expr));
-        document.getElementById("result").innerText = 
-          `Результат: ${result.n}/${result.d}`;
-      } catch (e) {
+        const result = math.evaluate(input);
+        const frac = math.fraction(result);
+        document.getElementById("result").innerText =
+          `Результат: ${result}  (${frac.n}/${frac.d})`;
+      } catch (error) {
         document.getElementById("result").innerText = "❌ Помилка у виразі";
       }
     }
