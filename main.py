@@ -5,7 +5,7 @@ from aiogram.enums import ParseMode
 from aiogram.filters import Command
 from aiogram.types import Message
 
-TOKEN = "YOUR BOT TOKEN"
+TOKEN = os.getenv("BOT_TOKEN")
 
 from aiogram.client.default import DefaultBotProperties
 
@@ -21,7 +21,7 @@ async def start(message: Message):
     keyboard = InlineKeyboardMarkup(inline_keyboard=[
         [InlineKeyboardButton(
             text="🧮 Калькулятор дробів",
-            web_app=WebAppInfo(url="YOUR WEBAPP URL")
+            web_app=WebAppInfo(url="https://keqdigitalhec.github.io/calculator-bot/")
         )]
     ])
     await message.answer("Натисни кнопку, щоб запустити калькулятор:", reply_markup=keyboard)
