@@ -13,3 +13,5 @@ RUN pip install --upgrade pip && \
 
 # Запуск бота
 CMD ["python", "main.py"]
+
+ENV BOT_TOKEN=${BOT_TOKEN}
